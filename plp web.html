@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Enhanced Accessible HTML5 Form</title>
+  <meta name="description" content="An accessible, well-structured HTML5 form demonstrating lists, tables, media and HTML5 validation features.">
+  <style>
+    :root{
+      --max-width:900px;
+      --accent:#0b5cff;
+      --muted:#666;
+      --bg:#f7f9fc;
+      --card:#fff;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+    }
+    body{background:var(--bg);color:#111;margin:0;padding:2rem;display:flex;justify-content:center}
+    .container{max-width:var(--max-width);width:100%;background:var(--card);border-radius:10px;box-shadow:0 6px 20px rgba(10,20,30,.08);padding:1.5rem}
+    header h1{margin:.25rem 0;font-size:1.4rem}
+    header p{margin:0;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:1rem;margin-top:1rem}
+    main{padding:.5rem}
+    aside{padding:.75rem;border-left:1px solid #eee}
+    fieldset{border:1px solid #e6eefc;padding:1rem;margin:0 0 1rem;border-radius:8px}
+    legend{font-weight:600;padding:0 .25rem}
+    label{display:block;margin:.4rem 0 .15rem}
+    input,select,textarea{width:100%;padding:.5rem;border:1px solid #d7e3ff;border-radius:6px;font-size:0.95rem}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+    .actions{display:flex;gap:.5rem;justify-content:flex-end;margin-top:.5rem}
+    .muted{color:var(--muted);font-size:.9rem}
+    table{width:100%;border-collapse:collapse;margin-top:.5rem}
+    th,td{padding:.5rem;border:1px solid #eef5ff;text-align:left}
+    caption{font-weight:600;margin-bottom:.4rem}
+    .media{margin-top:.5rem}
+    .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .required-star{color:#b30000;margin-left:.15rem}
+    footer{margin-top:1rem;color:var(--muted);font-size:.9rem}
+    @media (max-width:880px){.grid{grid-template-columns:1fr}}
+  </style>\head>
+</head>
+<body>
+  <div class="container" role="document">
+    <header>
+      <h1>Project Intake & Feedback Form</h1>
+      <p class="muted">A semantic, accessible HTML5 form demonstrating lists, tables, media and native validation.</p>
+    </header>
+
+    <div class="grid">
+      <main>
+        <form id="enhancedForm" action="#" method="post" autocomplete="on" novalidate="" aria-describedby="form-desc">
+          <p id="form-desc" class="muted">Fields marked with <span aria-hidden="true" class="required-star">*</span> are required. Built-in browser validation is used where applicable.</p>
+
+          <fieldset>
+            <legend>Account & Contact</legend>
+            <div class="two">
+              <div>
+                <label for="userId">User ID</label>
+                <input id="userId" name="userId" type="text" value="TU-2025-4398" readonly aria-readonly="true" autocomplete="username" />
+                <small class="muted">Readonly system-assigned identifier.</small>
+              </div>
+
+              <div>
+                <label for="username">Preferred username <span class="required-star" aria-hidden="true">*</span></label>
+                <input id="username" name="username" type="text" required minlength="3" maxlength="30" placeholder="e.g. timothy.m" autocomplete="username" pattern="^[A-Za-z0-9._-]+$" title="Use letters, numbers, dots, underscores or hyphens only">
+              </div>
+            </div>
+
+            <div class="two" style="margin-top:.6rem">
+              <div>
+                <label for="email">Email address <span class="required-star" aria-hidden="true">*</span></label>
+                <input id="email" name="email" type="email" required placeholder="name@example.com" autocomplete="email" aria-describedby="emailHelp">
+                <small id="emailHelp" class="muted">We will use this to contact you about your submission.</small>
+              </div>
+
+              <div>
+                <label for="phone">Mobile phone</label>
+                <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="+254700000000" pattern="^\+?\d{9,15}$" title="Include country code, e.g. +254700000000" autocomplete="tel">
+              </div>
+            </div>
+
+            <div style="margin-top:.6rem">
+              <label for="org">Organization</label>
+              <input id="org" name="organization" type="text" placeholder="Your organisation (optional)" autocomplete="organization">
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Project Details</legend>
+
+            <label for="title">Project title <span class="required-star" aria-hidden="true">*</span></label>
+            <input id="title" name="title" type="text" required maxlength="100" placeholder="Short descriptive title" autocomplete="off">
+
+            <label for="category" style="margin-top:.5rem">Category <span class="required-star" aria-hidden="true">*</span></label>
+            <select id="category" name="category" required aria-required="true" autocomplete="off">
+              <option value="">-- Choose a category --</option>
+              <option value="agritech">AgriTech</option>
+              <option value="edutech">EdTech</option>
+              <option value="fintech">FinTech</option>
+              <option value="health">Health</option>
+              <option value="other">Other</option>
+            </select>
+
+            <label for="summary" style="margin-top:.5rem">Project summary <span class="required-star" aria-hidden="true">*</span></label>
+            <textarea id="summary" name="summary" rows="5" required minlength="30" maxlength="1200" placeholder="Briefly describe your project and expected impact" aria-describedby="summaryHelp"></textarea>
+            <small id="summaryHelp" class="muted">30–1200 characters.</small>
+
+            <div class="two" style="margin-top:.6rem">
+              <div>
+                <label for="budget">Estimated budget (USD)</label>
+                <input id="budget" name="budget" type="number" min="0" step="0.01" placeholder="e.g. 1500.00" inputmode="decimal" autocomplete="off">
+              </div>
+
+              <div>
+                <label for="launch">Proposed start date</label>
+                <input id="launch" name="startDate" type="date" min="2025-01-01" max="2030-12-31" autocomplete="on">
+              </div>
+            </div>
+
+            <div style="margin-top:.6rem">
+              <label>Expected team size</label>
+              <input id="team" name="teamSize" type="range" min="1" max="50" value="3" oninput="document.getElementById('teamOut').value = this.value" aria-valuemin="1" aria-valuemax="50">
+              <output id="teamOut">3</output>
+            </div>
+
+          </fieldset>
+
+          <fieldset>
+            <legend>Files, Links & Extras</legend>
+
+            <label for="pitch">Upload pitch deck</label>
+            <input id="pitch" name="pitch" type="file" accept="application/pdf,application/vnd.openxmlformats-officedocument.presentationml.presentation" aria-describedby="fileHelp">
+            <small id="fileHelp" class="muted">PDF or PPTX only (max file size enforced server-side).</small>
+
+            <label for="website" style="margin-top:.5rem">Project website</label>
+            <input id="website" name="website" type="url" placeholder="https://example.org" autocomplete="url">
+
+            <label for="skills" style="margin-top:.5rem">Key technologies (choose one or more)</label>
+            <select id="skills" name="skills" multiple size="4" aria-describedby="skillsHelp">
+              <option value="data">Data Science</option>
+              <option value="mobile">Mobile App</option>
+              <option value="iot">IoT</option>
+              <option value="ml">Machine Learning</option>
+              <option value="dm">Digital Marketing</option>
+            </select>
+            <small id="skillsHelp" class="muted">Hold Ctrl (Windows) or Cmd (Mac) to select multiple.</small>
+
+            <label style="margin-top:.5rem">Consent</label>
+            <div>
+              <input id="consent" name="consent" type="checkbox" required>
+              <label for="consent">I confirm the information provided is accurate <span class="required-star" aria-hidden="true">*</span></label>
+            </div>
+
+          </fieldset>
+
+          <fieldset>
+            <legend>Preferences & Review</legend>
+
+            <label>Notification preference</label>
+            <div>
+              <input type="radio" id="prefEmail" name="notify" value="email" checked>
+              <label for="prefEmail">Email</label>
+              <input type="radio" id="prefSMS" name="notify" value="sms">
+              <label for="prefSMS">SMS</label>
+              <input type="radio" id="prefNone" name="notify" value="none">
+              <label for="prefNone">None</label>
+            </div>
+
+            <label for="feedback" style="margin-top:.5rem">Additional notes</label>
+            <textarea id="feedback" name="feedback" rows="3" placeholder="Anything you'd like reviewers to know" maxlength="600"></textarea>
+
+            <div style="margin-top:.6rem">
+              <label for="rating">Your confidence level</label>
+              <input id="rating" name="rating" type="number" min="1" max="10" step="1" required placeholder="1–10" aria-label="confidence rating">
+            </div>
+
+          </fieldset>
+
+          <div class="actions">
+            <button type="reset">Reset</button>
+            <button type="submit">Submit</button>
+          </div>
+
+        </form>
+
+        <!-- A summary table using semantic structure -->
+        <section aria-labelledby="sample-data" style="margin-top:1rem">
+          <h2 id="sample-data">Example Submissions (table)</h2>
+          <p class="muted">A small accessible table showing submission metadata.</p>
+          <table role="table" aria-describedby="tableDesc">
+            <caption>Recent submissions</caption>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Timothy M.</td>
+                <td>AgriTech</td>
+                <td>2025-05-21</td>
+                <td>Under review</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Aisha K.</td>
+                <td>EdTech</td>
+                <td>2025-06-05</td>
+                <td>Shortlisted</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- An example list -->
+        <section aria-labelledby="checklist" style="margin-top:1rem">
+          <h2 id="checklist">Before you submit</h2>
+          <ol>
+            <li>Complete required fields marked with an asterisk.</li>
+            <li>Attach a single PDF/PPTX pitch deck (optional but recommended).</li>
+            <li>Check contact details for accuracy.</li>
+            <li>Click <strong>Submit</strong> when ready.</li>
+          </ol>
+        </section>
+
+      </main>
+
+      <aside>
+        <section aria-labelledby="media" class="media">
+          <h3 id="media">Media samples</h3>
+          <figure>
+            <img src="https://via.placeholder.com/300x160.png?text=Project+Snapshot" alt="Mock project screenshot showing dashboard mockup" width="300" height="160">
+            <figcaption class="muted">Figure: mockup of a project dashboard.</figcaption>
+          </figure>
+
+          <div style="margin-top:.6rem">
+            <audio controls preload="none">
+              <source src="" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+            <p class="muted">Audio sample (no file included in this example).</p>
+          </div>
+
+          <div style="margin-top:.6rem">
+            <video controls width="300" preload="none" aria-label="Explainer video (not included)">
+              <source src="" type="video/mp4">
+              Your browser does not support the video element.
+            </video>
+            <p class="muted">Optional explainer video (provide an MP4 to enable playback).</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="contact" style="margin-top:1rem">
+          <h3 id="contact">Contact & quick links</h3>
+          <ul>
+            <li><a href="#enhancedForm">Jump to form</a></li>
+            <li><a href="#sample-data">See sample submissions</a></li>
+            <li><a href="mailto:timmulwa123@gmail.com">Email support</a></li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="meta" style="margin-top:1rem">
+          <h3 id="meta">Form metadata</h3>
+          <p class="muted">Method: <code>POST</code> | Encoding: <code>multipart/form-data</code> (if files present)</p>
+        </section>
+      </aside>
+    </div>
+
+    <footer>
+      <p class="muted">This document demonstrates semantic HTML5, accessibility features (labels, aria attributes), native validation (required, type, pattern, minlength, maxlength), and proper use of lists, tables and media.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Small progressive enhancement: show current range value on load
+    (function(){
+      var range = document.getElementById('team');
+      var out = document.getElementById('teamOut');
+      if(range && out){ out.value = range.value; range.addEventListener('input', function(){ out.value = this.value; }); }
+
+      // Example: prevent submission for the demo (remove in production)
+      var form = document.getElementById('enhancedForm');
+      form.addEventListener('submit', function(e){
+        // Let browser run validation first
+        if(!form.checkValidity()) return; // native messages will show
+        e.preventDefault();
+        alert('Demo form prevented actual submit. All client-side validation passed.');
+      });
+    })();
+  </script>
+</body>
+</html>
